@@ -54,7 +54,7 @@ export default function Home() {
               />
               <button
                 onClick={handleSendCode}
-                className="bg-primary mt-4 w-full rounded-full p-3.5 text-white"
+                className="bg-primary mt-4 w-full cursor-pointer rounded-full p-3.5 text-white"
               >
                 Send WhatsApp Code
               </button>
@@ -92,7 +92,7 @@ export default function Home() {
               />
               <button
                 onClick={handleVerifyCode}
-                className="bg-primary mt-4 w-full rounded-full p-3.5 text-white"
+                className="bg-primary mt-4 w-full cursor-pointer rounded-full p-3.5 text-white"
               >
                 Verify Code
               </button>
