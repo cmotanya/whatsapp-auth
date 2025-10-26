@@ -36,7 +36,13 @@ export const onSubmit = async ({
   setIsVerifying(true);
 
   try {
-    const res = await createData(data);
+    const res = await fetch("/api/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
 
     if (res.success) {
       form.reset();
