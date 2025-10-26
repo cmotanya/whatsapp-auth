@@ -10,13 +10,15 @@ export const AppToaster = () => (
         fontSize: "14px",
       },
       success: {
+        duration: 3000,
         style: {
-          background: "#b25487",
+          background: "#2a9d8f",
           color: "#fff",
+          fontSize: "12px",
         },
         iconTheme: {
           primary: "#fff",
-          secondary: "#b25487",
+          secondary: "#2a9d8f",
         },
       },
       error: {

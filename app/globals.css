@@ -6,6 +6,8 @@
   --primary: #b25487;
   --secondary: #d598b9;
   --accent: #cc78a6;
+  --error: #e63946;
+  --success: #2a9d8f;
 }
 
 @theme inline {
@@ -15,6 +17,9 @@
   --color-accent: var(--accent);
 
   --color-text: var(--text);
+
+  --color-error: var(--error);
+  --color-success: var(--success);
 
   --body-font: var(--font-sora), sans-serif;
   --heading-font: var(--font-grotesk), sans-serif;
@@ -30,10 +35,23 @@ body {
   background: var(--background);
   color: var(--text);
   font-family: var(--font-sora), sans-serif;
-  padding: 1rem;
+  padding: 1rem 1rem;
 }
 
 h1,
 h2 {
   font-family: var(--font-grotesk), sans-serif;
+}
+
+/* Hide arrows for Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: none;
 }
