@@ -14,7 +14,7 @@ export const StepTwo = ({
 }: StepTwoProps) => {
   return (
     <>
-      <h1 className="flex gap-2 text-center text-3xl font-bold">
+      <h1 className="flex gap-2 text-center text-3xl font-bold whitespace-nowrap">
         <Fade direction="left" duration={200}>
           <span>YOU&apos;RE ALMOST THERE</span>
         </Fade>
