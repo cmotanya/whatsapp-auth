@@ -16,7 +16,7 @@ export const StepTwo = ({
     <>
       <h1 className="flex gap-2 text-center text-3xl font-bold">
         <Fade direction="left" duration={200}>
-          <span>ALMOST THERE</span>
+          <span>YOU&apos;RE ALMOST THERE</span>
         </Fade>
         <Fade direction="right" duration={300}>
           <span className="text-primary">✨</span>
