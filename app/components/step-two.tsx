@@ -1,9 +1,10 @@
 import { cn } from "@/utils/cn";
-import { handleVerify } from "@/utils/helper";
+import { handleInputFocus, handleVerify } from "@/utils/helper";
 import { StepTwoProps } from "@/utils/types";
 import { Asterisk } from "lucide-react";
 import { Fade } from "react-awesome-reveal";
 import { Controller } from "react-hook-form";
+import { set } from "zod";
 
 export const StepTwo = ({
   form,
@@ -59,13 +60,9 @@ export const StepTwo = ({
                   aria-invalid={fieldState.invalid}
                   maxLength={4}
                   ref={inputRef}
-                  onFocus={(e) => {
-                    setIsFocused(true);
-                    e.target.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    });
-                  }}
+                  onFocus={(event) =>
+                    handleInputFocus({ setIsFocused, e: event })
+                  }
                   className={cn(
                     "focus:ring-secondary/50 ring-accent bg-secondary/15 text-text/70 mt-2 w-full rounded-lg p-3 shadow-lg ring-1 ring-offset-2 transition-all duration-300 ease-in-out outline-none focus:ring-1",
 

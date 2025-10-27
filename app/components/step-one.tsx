@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { handleSendCode } from "@/utils/helper";
+import { handleInputFocus, handleSendCode } from "@/utils/helper";
 import { StepOneProps } from "@/utils/types";
 import { Asterisk } from "lucide-react";
 import { Fade } from "react-awesome-reveal";
@@ -18,7 +18,7 @@ export const StepOne = ({
           <span>LET&apos;S GET STARTED </span>
         </Fade>
         <Fade direction="right" duration={300}>
-          <span className="text-primary">🚀</span>
+          <span>🚀</span>
         </Fade>
       </h1>
       <Fade direction="down" duration={200} delay={200}>
@@ -45,13 +45,9 @@ export const StepOne = ({
                   placeholder="+254 700 000000"
                   {...field}
                   id={field.name}
-                  onFocus={(e) => {
-                    setIsFocused(true);
-                    e.target.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    });
-                  }}
+                  onFocus={(event) =>
+                    handleInputFocus({ setIsFocused, e: event })
+                  }
                   onBlur={() => setIsFocused(false)}
                   className={cn(
                     "focus:ring-secondary/50 ring-accent bg-secondary/15 text-text/60 mt-2 w-full rounded-lg p-3 font-medium shadow-lg ring-1 ring-offset-2 transition-all duration-300 ease-in-out outline-none focus:border-none focus:shadow-md focus:ring-1",

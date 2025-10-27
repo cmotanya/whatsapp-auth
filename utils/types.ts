@@ -18,8 +18,6 @@ export type HandleVerifyProps = {
   inputRef: React.RefObject<HTMLInputElement | null>;
 };
 
-// export type data = z.infer<typeof authSchema>;
-
 export type OnSubmitProps = {
   data: AuthFormData;
   setStep: (step: number) => void;
@@ -40,4 +38,9 @@ export type StepOneProps = {
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   formState: AuthFormType["formState"];
   setStep: (step: number) => void;
+};
+
+export type HandleInputFocusProps = {
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  e: React.FocusEvent<HTMLInputElement>;
 };

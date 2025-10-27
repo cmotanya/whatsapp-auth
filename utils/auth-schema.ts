@@ -9,7 +9,7 @@ export const phoneSchema = z.object({
     .max(15, { message: "Phone number must be at most 15 digits" })
     .regex(/^(\+254|0)\d{9}$/, {
       message:
-        "Phone number must start with +254 or 0 and contain 9 digits after that (e.g. +254700000000 or 0700000000)",
+        "Phone number must start with +254 or 0 and contain 9 digits after that.",
     }),
 });
 

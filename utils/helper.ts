@@ -1,6 +1,10 @@
 import { toast } from "react-hot-toast";
-import { HandleSendCodeProps, HandleVerifyProps, OnSubmitProps } from "./types";
-import z from "zod";
+import {
+  HandleInputFocusProps,
+  HandleSendCodeProps,
+  HandleVerifyProps,
+  OnSubmitProps,
+} from "./types";
 
 export const handleSendCode = async ({
   form,
@@ -31,7 +35,6 @@ export const onSubmit = async ({
   data,
   setStep,
   setIsVerifying,
-  form,
 }: OnSubmitProps) => {
   setIsVerifying(true);
 
@@ -45,7 +48,7 @@ export const onSubmit = async ({
     }).then((res) => res.json());
 
     if (res.success) {
-      form.reset();
+      // form.reset();
       toast.success("Phone number verified successfully!");
       setStep(1);
     } else {
@@ -57,4 +60,17 @@ export const onSubmit = async ({
   } finally {
     setIsVerifying(false);
   }
+};
+
+export const handleInputFocus = ({
+  setIsFocused,
+  e,
+}: HandleInputFocusProps) => {
+  return (
+    setIsFocused(true),
+    e.target.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    })
+  );
 };
