@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { StepTwo } from "./components/step-two";
 import { StepOne } from "./components/step-one";
-import { onSubmit } from "@/utils/helper";
+import { onSubmit } from "@/utils/onSubmit";
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -51,6 +51,7 @@ export default function Home() {
           setIsFocused={setIsFocused}
           isVerifying={isVerifying}
           formState={formState}
+          setStep={setStep}
         />
       )}
     </form>

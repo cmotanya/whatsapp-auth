@@ -10,7 +10,7 @@ export const AppToaster = () => (
         fontSize: "14px",
       },
       success: {
-        duration: 3000,
+        duration: 2000,
         style: {
           background: "#2a9d8f",
           color: "#fff",

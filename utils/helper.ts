@@ -1,66 +1,7 @@
-import { toast } from "react-hot-toast";
-import {
-  HandleInputFocusProps,
-  HandleSendCodeProps,
-  HandleVerifyProps,
-  OnSubmitProps,
-} from "./types";
-
-export const handleSendCode = async ({
-  form,
-  setStep,
-}: HandleSendCodeProps) => {
-  const isValid = await form.trigger("phone", { shouldFocus: true });
-
-  if (!isValid) return;
-
-  setStep(2);
-
-  toast.success("Verification code sent to your WhatsApp number!");
-};
-
-export const handleVerify = async ({ form, inputRef }: HandleVerifyProps) => {
-  const isValid = await form.trigger("code", { shouldFocus: true });
-  if (!isValid) {
-    inputRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-    inputRef.current?.focus();
-    return;
-  }
-};
-
-export const onSubmit = async ({
-  data,
-  setStep,
-  setIsVerifying,
-}: OnSubmitProps) => {
-  setIsVerifying(true);
-
-  try {
-    const res = await fetch("/api/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
-
-    if (res.success) {
-      // form.reset();
-      toast.success("Phone number verified successfully!");
-      setStep(1);
-    } else {
-      toast.error(res.message || "An error occurred. Please try again.");
-    }
-  } catch (error) {
-    toast.error("An error occurred. Please try again.");
-    console.error(error);
-  } finally {
-    setIsVerifying(false);
-  }
-};
+import z from "zod";
+import { AuthFormData } from "./types";
+import { NextResponse } from "next/server";
+import { HandleInputFocusProps } from "./types";
 
 export const handleInputFocus = ({
   setIsFocused,
@@ -73,4 +14,56 @@ export const handleInputFocus = ({
       block: "center",
     })
   );
+};
+
+export const generateVerificationCode = (): string => {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+};
+
+export const formatPhoneNumber = (phone: string): string => {
+  if (!phone) return "";
+
+  return phone
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/^0/, "+254")
+    .replace(/^254/, "+254")
+    .replace(/^(\+{2,})/, "+")
+    .replace(/[^+\d]/g, "");
+};
+
+export const errorMessage = (
+  message: string,
+  status: number,
+  details?: unknown,
+) => {
+  let errorMessage;
+
+  if (details && details instanceof z.ZodError) {
+    try {
+      errorMessage = z.treeifyError(details as z.ZodError<AuthFormData>);
+    } catch (error) {
+      errorMessage = details || error;
+    }
+  }
+  return NextResponse.json(
+    { success: false, message, ...(errorMessage && { details: errorMessage }) },
+    { status },
+  );
+};
+
+export const successMessage = <T>(
+  message: string,
+  status: number,
+  verified: boolean = true,
+  data?: T,
+) => {
+  const res = { success: true, message, verified, ...data };
+  return NextResponse.json(res, { status });
+};
+
+export const parseQueryParams = (req: Request) => {
+  const { searchParams } = new URL(req.url);
+  const query = Object.fromEntries(searchParams.entries());
+  return query;
 };

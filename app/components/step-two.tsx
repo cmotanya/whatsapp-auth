@@ -1,10 +1,12 @@
+"use client";
+
 import { cn } from "@/utils/cn";
-import { handleInputFocus, handleVerify } from "@/utils/helper";
+import { handleVerifyCode } from "@/utils/handle-verify";
+import { handleInputFocus } from "@/utils/helper";
 import { StepTwoProps } from "@/utils/types";
 import { Asterisk } from "lucide-react";
 import { Fade } from "react-awesome-reveal";
 import { Controller } from "react-hook-form";
-import { set } from "zod";
 
 export const StepTwo = ({
   form,
@@ -12,6 +14,7 @@ export const StepTwo = ({
   setIsFocused,
   isVerifying,
   formState,
+  setStep,
 }: StepTwoProps) => {
   return (
     <>
@@ -63,6 +66,7 @@ export const StepTwo = ({
                   onFocus={(event) =>
                     handleInputFocus({ setIsFocused, e: event })
                   }
+                  onBlur={() => setIsFocused(false)}
                   className={cn(
                     "focus:ring-secondary/50 ring-accent bg-secondary/15 text-text/70 mt-2 w-full rounded-lg p-3 shadow-lg ring-1 ring-offset-2 transition-all duration-300 ease-in-out outline-none focus:ring-1",
 
@@ -87,7 +91,7 @@ export const StepTwo = ({
                 <button
                   type="submit"
                   disabled={isVerifying}
-                  onClick={() => handleVerify({ form, inputRef })}
+                  onClick={() => handleVerifyCode({ form, inputRef, setStep })}
                   className={cn(
                     "bg-primary hover:bg-primary/80 active:bg-accent mt-4 w-full cursor-pointer rounded-full p-3.5 text-white shadow-lg transition-all duration-200 ease-in-out hover:-translate-y-0.5 active:-translate-y-0.5",
 

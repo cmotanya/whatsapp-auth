@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/utils/cn";
-import { handleInputFocus, handleSendCode } from "@/utils/helper";
+import { handleSendCode } from "@/utils/handle-send";
+import { handleInputFocus } from "@/utils/helper";
 import { StepOneProps } from "@/utils/types";
 import { Asterisk } from "lucide-react";
 import { Fade } from "react-awesome-reveal";

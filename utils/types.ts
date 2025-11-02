@@ -16,6 +16,7 @@ export type HandleSendCodeProps = {
 export type HandleVerifyProps = {
   form: AuthFormType;
   inputRef: React.RefObject<HTMLInputElement | null>;
+  setStep: (step: number) => void;
 };
 
 export type OnSubmitProps = {
@@ -31,6 +32,7 @@ export type StepTwoProps = {
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   isVerifying: boolean;
   formState: AuthFormType["formState"];
+  setStep: (step: number) => void;
 };
 
 export type StepOneProps = {
@@ -43,4 +45,31 @@ export type StepOneProps = {
 export type HandleInputFocusProps = {
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   e: React.FocusEvent<HTMLInputElement>;
+};
+
+export type ApiResponse = {
+  success: boolean;
+  message?: string;
+  code: string;
+};
+
+export interface AuthResponse extends ApiResponse {
+  token?: string;
+  user?: AuthFormData;
+}
+
+export type ActionButtonType = {
+  onClick: () => void;
+  variant?: "primary" | "secondary";
+  children: React.ReactNode;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+  className?: string;
+};
+
+export type ButtonProps = {
+  onClick: () => void;
+  children: React.ReactNode;
+  className?: string;
+  icon?: React.ReactNode;
+  iconPosition?: "left" | "right";
 };

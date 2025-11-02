@@ -25,5 +25,14 @@ export const codeSchema = z.object({
     }),
 });
 
+export const verificationParamsSchema = z.object({
+  phone: phoneSchema.shape.phone.optional(),
+  action: z.enum(["expired", "reset"]).optional(),
+  code: codeSchema.shape.code.optional(),
+});
+
 export const authSchema = phoneSchema.extend(codeSchema.shape);
 export type AuthSchema = z.infer<typeof authSchema>;
+export type VerificationParamsSchemaType = z.infer<
+  typeof verificationParamsSchema
+>;
