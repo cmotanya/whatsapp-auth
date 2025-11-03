@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 import { verificationParamsSchema } from "@/utils/auth-schema";
 import {
   parseQueryParams,
@@ -8,6 +8,7 @@ import {
 } from "@/utils/helper";
 
 export const GETHandler = async (req: Request) => {
+  const prisma = new PrismaClient();
   try {
     const query = parseQueryParams(req);
 

@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 import {
   errorMessage,
   formatPhoneNumber,
@@ -7,6 +7,7 @@ import {
 } from "@/utils/helper";
 
 export const POSTHandler = async (req: Request) => {
+  const prisma = new PrismaClient();
   try {
     const body = await req.json();
 
