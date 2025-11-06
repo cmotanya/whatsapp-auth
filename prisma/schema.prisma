@@ -9,20 +9,20 @@ datasource db {
 }
 
 model User {
-  id                 String             @id @default(cuid())
-  phone              String             @unique
-  createdAt          DateTime           @default(now())
-  verificationCodes  VerificationCode[]
+  id                String             @id @default(cuid())
+  phone             String             @unique
+  createdAt         DateTime           @default(now())
+  verificationCodes VerificationCode[]
 }
 
 model VerificationCode {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   code      String
   verified  Boolean  @default(false)
   expiresAt DateTime
   createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([code])
