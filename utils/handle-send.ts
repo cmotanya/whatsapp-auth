@@ -12,7 +12,7 @@ export const handleSendCode = async ({
   const phone = form.getValues("phone");
 
   try {
-    const response = await fetch("api/verify", {
+    const response = await fetch("/api/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phone }),
