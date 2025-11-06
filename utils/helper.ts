@@ -58,7 +58,7 @@ export const successMessage = <T>(
   verified: boolean = true,
   data?: T,
 ) => {
-  const res = { success: true, message, verified, ...data };
+  const res = { success: true, message, verified, ...(data ?? {}) };
   return NextResponse.json(res, { status });
 };
 

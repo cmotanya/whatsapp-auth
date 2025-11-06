@@ -6,6 +6,7 @@ import {
   successMessage,
   formatPhoneNumber,
 } from "@/utils/helper";
+import jwt from "jsonwebtoken";
 
 export const GETHandler = async (req: Request) => {
   const prisma = new PrismaClient();
@@ -58,7 +59,16 @@ export const GETHandler = async (req: Request) => {
       data: { verified: true },
     });
 
-    return successMessage("User verified successfully.", 200, true, { user });
+    const token = jwt.sign(
+      { id: user.id, phone: user.phone },
+      process.env.JWT_SECRET! as string,
+      { expiresIn: "1d" },
+    );
+
+    return successMessage("User verified successfully.", 200, true, {
+      user: { user: user.id, phone: user.phone },
+      token,
+    });
   } catch (error) {
     console.error("❌ Error fetching user:", error);
     return errorMessage("Failed to fetch user.", 500);

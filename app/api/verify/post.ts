@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import twilio from "twilio";
 import {
   errorMessage,
   formatPhoneNumber,
@@ -8,6 +9,17 @@ import {
 
 export const POSTHandler = async (req: Request) => {
   const prisma = new PrismaClient();
+
+  const client = twilio(
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_AUTH_TOKEN,
+    {
+      lazyLoading: true,
+    },
+  );
+
+  const twilioServiceSid = process.env.TWILIO_SERVICE_SID;
+
   try {
     const body = await req.json();
 
@@ -21,6 +33,10 @@ export const POSTHandler = async (req: Request) => {
 
     if (!formattedPhoneNumber) {
       return errorMessage("Invalid phone number.", 400);
+    }
+
+    if (!twilioServiceSid) {
+      return errorMessage("Twilio service SID is not set.", 500);
     }
 
     const user = await prisma.user.upsert({
@@ -43,15 +59,23 @@ export const POSTHandler = async (req: Request) => {
       },
     });
 
-    // TODO: Send WhatsApp message via Meta API
+    // Twilio Verification API
+    const message = await client.messages.create({
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: formattedPhoneNumber,
+      body: `Your verification code is: ${code}`,
+    });
 
     if (process.env.NODE_ENV === "development") {
       console.log(`🔐 Verification code for ${formattedPhoneNumber}: ${code}`);
     }
 
-    return successMessage("Verification code sent successfully.", 200, true, {
-      code,
-    });
+    return successMessage(
+      "Verification code sent successfully.",
+      200,
+      true,
+      message.sid,
+    );
   } catch (error) {
     console.error("❌ Error sending code:", error);
 
